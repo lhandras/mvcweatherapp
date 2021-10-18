@@ -6,3 +6,5 @@ egyedül a Web.config-ba szükséges megadni a weatherbit.io hozzáféréshez sz
 <br><br>
 Szükség esetén IIS-be is beüzemelhető. 
 Ekkor a lefordított alkalmazás publikálása szükséges egy IIS siteba valamint az App_Data-ban található adatbázist SQL szerver alá becsatolva ennek elérését kell megadni szintén a Web.config-ba és már használható is.
+<br><br>
+A teszt rendszerben az időjárás adatok háttérbeli frissítéséről a mellékelt konzol applikáció időzített futtatásával gondoskodhatunk. Éles rendszer esetén más, ütemezett megoldás javasolt.
