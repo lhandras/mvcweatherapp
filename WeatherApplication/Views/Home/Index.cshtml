@@ -1,0 +1,110 @@
+﻿@model WeatherApplication.Models.UserCityViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@{
+    if (!User.Identity.IsAuthenticated)
+    {
+        @Html.Partial("_PleaseLogin")
+    }
+    else
+    {
+        <div class="row justify-content-between">
+            <div class="col">
+                <h1>Your Cities:</h1>
+            </div>
+            <div class="col position-relative">
+                <div class="position-absolute end-0 add-city">
+                    <a href="#" class="btn btn-info showModalButton" id="btnShowModal" value="@Url.Action("ShowCityList")">
+                        <i class="fas fa-plus-circle"></i>
+                        Add city
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="card-deck">
+                @foreach (var city in Model.FavouriteUserCities)
+                {
+                    <div class="card">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">
+                                @city.CityName
+
+                                <a href="@Url.Action("Favourite", new {CityId = city.Id})" title="Favourite" class="position-absolute end-0 top-0 favourite">
+                                    <span class="btn fa-star-checked">
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                </a>
+
+                            </h5>
+                            <h6 class="card-subtitle">
+                                @Html.Raw(@city.CountryName ?? "&nbsp;")
+                            </h6>
+
+                            <p class="card-text mt-auto">
+                                <span style="min-height: 21px;">
+                                    @Html.Raw(@city.WeatherDescription ?? "&nbsp;")
+                                </span>
+                                <img src="/Content/icons/@Html.Raw((@city.WeatherIcon ?? "empty") + ".png")" class="card-img-top" alt="" />
+                                <a href="#" class="btn btn-info showDetailModalButton" value="@Url.Action("WeatherDetails", new { CityId = city.Id })" title="@city.CityName - @city.CountryName">Details</a>
+
+                                <a href="@Url.Action("RemoveCity", new { CityId = city.Id})" title="Remove City" class="position-absolute end-0">
+                                    <span class="btn">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                </a>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            Last observation: @Html.Raw(@city.ObservationTime ?? "NA")
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="card-deck">
+                @foreach (var city in Model.NonFavouriteUserCities)
+                {
+                    <div class="card">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">
+                                @city.CityName
+
+                                <a href="@Url.Action("Favourite", new {CityId = city.Id})" title="Favourite" class="position-absolute end-0 top-0 favourite">
+                                    <span class="btn">
+                                        <i class="far fa-star"></i>
+                                    </span>
+                                </a>
+                            </h5>
+                            <h6 class="card-subtitle">
+                                @Html.Raw(@city.CountryName ?? "&nbsp;")
+                            </h6>
+
+                            <p class="card-text mt-auto">
+                                <span style="min-height: 21px;">
+                                    @Html.Raw(@city.WeatherDescription ?? "&nbsp;")
+                                </span>
+                                <img src="/Content/icons/@Html.Raw((@city.WeatherIcon ?? "empty") + ".png")" class="card-img-top" alt="" />
+                                <a href="#" class="btn btn-info showDetailModalButton" value="@Url.Action("WeatherDetails", new { CityId = city.Id})" title="@city.CityName - @city.CountryName">Details</a>
+
+                                <a href="@Url.Action("RemoveCity", new { CityId = city.Id})" title="Remove City" class="position-absolute end-0">
+                                    <span class="btn">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                </a>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            Last observation: @Html.Raw(@city.ObservationTime ?? "NA")
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    }
+}

@@ -1,0 +1,33 @@
+﻿.errors {
+    font-weight: bold;
+    color: red;
+}
+
+.fa-star-checked {
+    color: orange;
+}
+
+.card {
+    max-width: 300px;
+    min-width: 300px;
+}
+
+.favourite {
+    transform: translateY(10px);
+}
+
+.add-city {
+    transform: translateY(10px) translateX(-10px);
+}
+
+.uvindex {
+    transform: translateX(-15px);
+}
+
+.temperature {
+    transform: translateX(15px) translateY(10px);
+}
+
+.feelslike {
+    transform: translateX(-15px) translateY(10px);
+}

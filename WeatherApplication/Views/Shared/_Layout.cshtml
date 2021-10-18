@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Weather Forecast Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+</head>
+<body>
+    <div class="container">
+        
+        <div class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+
+            @Html.ActionLink("WeatherApp", "Index", "Home", new { area = "" }, new { @class = "navbar-brand ms-2" })
+
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="container body-content">
+        <div id="CitiesBody">
+            @RenderBody()
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Weather Forecast Application</p>
+        </footer>
+    </div>
+
+    <div class="modal fade" tabindex="-1" id="cityModal" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select City</h5>
+                    <button type="button" class="btn-close modalClose" data-dismiss="cityModal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="modalContent">
+                        <div style="text-align: center">
+                            <img src="@Url.Content("~/Content/images/loading.gif")" alt="">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modalClose" data-dismiss="cityModal">Close</button>
+                    <button type="button" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" id="detailModal" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailModalHeaderTitle"></h5>
+                    <button type="button" class="btn-close detailModalClose" data-dismiss="detailModal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="detailModalContent">
+                        <div style="text-align: center">
+                            <img src="@Url.Content("~/Content/images/loading.gif")" alt="">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary detailModalClose" data-dismiss="detailModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/fontawesome")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script src="@Url.Content("~/Scripts/ajax-modal-popup.js")"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#cityModal').modal({ "show": false, "backdrop": "static", "keyboard": false });
+            $('#detailModal').modal({ "show": false, "backdrop": "static", "keyboard": false });
+
+            $(".modalClose").click(function () {
+                $("#cityModal").modal('hide');
+                document.getElementById("modalContent").innerHTML = '<div style="text-align:center"><img src="@Url.Content("~/Content/images/loading.gif")" alt=""></div>';
+            });
+
+            $(".detailModalClose").click(function () {
+                $("#detailModal").modal('hide');
+                document.getElementById("detailModalContent").innerHTML = '<div style="text-align:center"><img src="@Url.Content("~/Content/images/loading.gif")" alt=""></div>';
+            });
+
+            $(".btn-primary").click(function() {
+                $("#addCityForm").submit();
+            });
+
+            $.ajaxSetup({ cache: false });
+        });
+    </script>
+
+</body>
+</html>

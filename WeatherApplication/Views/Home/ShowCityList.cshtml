@@ -1,0 +1,34 @@
+﻿@model WeatherApplication.Models.CitySelectLight
+<div>
+    @using (Ajax.BeginForm("ShowCityList", new RouteValueDictionary() { }, new AjaxOptions()
+    {
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "modalContent"
+    }, new { @id = "addCityForm"}))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @{
+                if (ViewData["ErrorMessages"] != null)
+                {
+                    <div class="errors">
+                        <ul>
+                            @{
+                                foreach (var message in ViewData["ErrorMessages"] as IList<string>)
+                                {
+                                    <li>@message</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                }
+            }
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.Id, ViewData["CityList"] as IEnumerable<SelectListItem>, "Choose city", new { @class ="form-select form-select-lg"})
+            </div>
+        </div>
+        
+    }
+
+</div>
